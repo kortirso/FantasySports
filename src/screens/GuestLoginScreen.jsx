@@ -10,8 +10,10 @@ import {
 } from 'react-native';
 
 import Button from '../components/Button';
+import FormField from '../components/FormField';
 import { useAuth } from '../contexts/AuthContext';
 import { getAccessToken } from '../api/authApi';
+import Colors from '../constants/Colors';
 
 export default function GuestLoginScreen({ navigation }) {
   const { setAccessToken } = useAuth();
@@ -26,10 +28,10 @@ export default function GuestLoginScreen({ navigation }) {
   }
 
   return (
-    <SafeAreaView style={{ backgroundColor: "#f5f5f4" }}>
+    <SafeAreaView style={{ backgroundColor: Colors.stone100 }}>
       <StatusBar
         barStyle="dark-content"
-        backgroundColor="#f5f5f4"
+        backgroundColor={Colors.stone100}
       />
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
@@ -37,28 +39,18 @@ export default function GuestLoginScreen({ navigation }) {
         contentContainerStyle={styles.screenContainer}
       >
         <View style={styles.container}>
-          <Text style={styles.title}>Login</Text>
-          <View style={styles.sectionStyle}>
-            <TextInput
-              style={styles.inputStyle}
-              onChangeText={(value) => setPageState({ ...pageState, email: value })}
-              placeholder="Enter email"
-              placeholderTextColor="#8b9cb5"
-              autoCapitalize="none"
-              keyboardType="email-address"
-              returnKeyType="next"
-            />
-          </View>
-          <View style={styles.sectionStyle}>
-            <TextInput
-              style={styles.inputStyle}
-              onChangeText={(value) => setPageState({ ...pageState, password: value })}
-              placeholder="Enter password"
-              placeholderTextColor="#8b9cb5"
-              autoCapitalize="none"
-              returnKeyType="next"
-            />
-          </View>
+          <FormField
+            label="Email"
+            placeholder="Enter email"
+            keyboardType="email-address"
+            onChangeText={(value) => setPageState({ ...pageState, email: value })}
+          />
+          <FormField
+            label="Password"
+            placeholder="Enter password"
+            keyboardType="email-address"
+            onChangeText={(value) => setPageState({ ...pageState, password: value })}
+          />
           <Button title="Login" onPress={() => loginUser()} />
         </View>
       </ScrollView>
@@ -76,24 +68,13 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   container: {
-    width: '50%',
-    backgroundColor: 'white',
+    width: '75%',
+    backgroundColor: Colors.white,
     borderWidth: 1,
-    borderColor: '#d6d3d1',
+    borderColor: Colors.stone300,
     borderRadius: 4,
     padding: 24,
     flexDirection: 'column',
     gap: 12
-  },
-  title: {
-    fontSize: 20
-  },
-  sectionStyle: {
-    padding: 8,
-    borderWidth: 1,
-    borderColor: '#d6d3d1',
-  },
-  inputStyle: {
-    
   }
 });

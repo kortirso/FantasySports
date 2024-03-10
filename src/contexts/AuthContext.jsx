@@ -30,12 +30,21 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  // remove access token from EncryptedStorage
+  const removeAccessToken = async () => {
+    try {
+      await EncryptedStorage.removeItem(ACCESS_TOKEN_STORAGE_NAME);
+      setAuthState({ ...authState, accessToken: undefined });
+    } catch (error) {
+    }
+  };
+
   useEffect(() => {
     getAccessToken();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ authState, setAccessToken }}>
+    <AuthContext.Provider value={{ authState, setAccessToken, removeAccessToken }}>
       {children}
     </AuthContext.Provider>
   );

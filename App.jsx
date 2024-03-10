@@ -5,7 +5,7 @@
  * @format
  */
 
-import React, { useState, useEffect, useContext } from 'react';
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 
 import Layout from './src/Layout'

@@ -9,13 +9,14 @@ import {
 } from 'react-native';
 
 import Button from '../components/Button';
+import Colors from '../constants/Colors';
 
 export default function GuestMainScreen({ navigation }) {
   return (
-    <SafeAreaView style={{ backgroundColor: "#f5f5f4" }}>
+    <SafeAreaView style={{ backgroundColor: Colors.stone100 }}>
       <StatusBar
         barStyle="dark-content"
-        backgroundColor="#f5f5f4"
+        backgroundColor={Colors.stone100}
       />
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
@@ -46,7 +47,7 @@ export default function GuestMainScreen({ navigation }) {
 const styles = StyleSheet.create({
   screen: {
     height: '100%',
-    backgroundColor: 'white'
+    backgroundColor: Colors.white
   },
   screenContainer: {
     flexGrow: 1,
@@ -64,9 +65,7 @@ const styles = StyleSheet.create({
   descriptionBox: {
     padding: 24
   },
-  description: {
-
-  },
+  description: {},
   loginBox: {
     padding: 12,
     flexDirection: 'row',
