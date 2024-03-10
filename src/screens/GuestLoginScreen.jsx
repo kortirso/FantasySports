@@ -10,12 +10,20 @@ import {
 } from 'react-native';
 
 import Button from '../components/Button';
+import { useAuth } from '../contexts/AuthContext';
+import { getAccessToken } from '../api/authApi';
 
 export default function GuestLoginScreen({ navigation }) {
+  const { setAccessToken } = useAuth();
   const [pageState, setPageState] = useState({
     email: '',
     password: ''
   });
+
+  const loginUser = async () => {
+    const response = await getAccessToken(pageState.email, pageState.password);
+    if (!!response) setAccessToken(response.access_token);
+  }
 
   return (
     <SafeAreaView style={{ backgroundColor: "#f5f5f4" }}>
@@ -51,7 +59,7 @@ export default function GuestLoginScreen({ navigation }) {
               returnKeyType="next"
             />
           </View>
-          <Button title="Login" onPress={() => navigation.navigate('GuestMain')} />
+          <Button title="Login" onPress={() => loginUser()} />
         </View>
       </ScrollView>
     </SafeAreaView>

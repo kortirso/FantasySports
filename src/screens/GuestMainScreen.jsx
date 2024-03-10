@@ -20,20 +20,23 @@ export default function GuestMainScreen({ navigation }) {
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={styles.screen}
+        contentContainerStyle={styles.screenContainer}
       >
-        <View style={styles.titleBox}>
-          <Text style={styles.title}>
-            Free to play fantasy sport games with friends
-          </Text>
-        </View>
-        <View style={styles.descriptionBox}>
-          <Text style={styles.description}>
-            Fantasy Sports gives you the opportunity to run your own teams of professional players from across the leagues and receive points based on their performance in games each week. Join with friends in leagues and find whose team is the best.
-          </Text>
-        </View>
-        <View style={styles.loginBox}>
-          <Button title="Login" onPress={() => navigation.navigate('GuestLogin')} />
-          <Button title="Sign up" onPress={() => navigation.navigate('GuestSign')} />
+        <View>
+          <View style={styles.titleBox}>
+            <Text style={styles.title}>
+              Free to play fantasy sport games with friends
+            </Text>
+          </View>
+          <View style={styles.descriptionBox}>
+            <Text style={styles.description}>
+              Fantasy Sports gives you the opportunity to run your own teams of professional players from across the leagues and receive points based on their performance in games each week. Join with friends in leagues and find whose team is the best.
+            </Text>
+          </View>
+          <View style={styles.loginBox}>
+            <Button title="Login" onPress={() => navigation.navigate('GuestLogin')} />
+            <Button title="Sign up" onPress={() => navigation.navigate('GuestSign')} />
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -42,9 +45,13 @@ export default function GuestMainScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   screen: {
-    backgroundColor: 'white',
     height: '100%',
-    flexDirection: 'column'
+    backgroundColor: 'white'
+  },
+  screenContainer: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   titleBox: {
     padding: 24
@@ -55,8 +62,7 @@ const styles = StyleSheet.create({
     fontSize: 24
   },
   descriptionBox: {
-    padding: 24,
-    backgroundColor: 'white'
+    padding: 24
   },
   description: {
 
