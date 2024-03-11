@@ -8,6 +8,9 @@ import GuestLoginScreen from './screens/GuestLoginScreen';
 import GuestSignScreen from './screens/GuestSignScreen';
 import ProfileMainScreen from './screens/ProfileMainScreen';
 import HomeScreen from './screens/HomeScreen';
+import DraftIcon from './assets/icons/DraftIcon';
+import PredictionIcon from './assets/icons/PredictionIcon';
+import ProfileIcon from './assets/icons/ProfileIcon';
 
 import { useAuth } from './contexts/AuthContext';
 
@@ -61,9 +64,33 @@ export default function Layout() {
       </GuestStack.Navigator>
     ) : (
       <Tab.Navigator screenOptions={{ headerShown: false }}>
-        <Tab.Screen name="Draft" component={HomeStackScreen} />
-        <Tab.Screen name="Prediction" component={HomeStackScreen} />
-        <Tab.Screen name="Profile" component={ProfileStackScreen} />
+        <Tab.Screen
+          name="Draft"
+          component={HomeStackScreen}
+          options={{
+            tabBarIcon: ({ focused, color, size }) => (
+              <DraftIcon focused={focused} color={color} size={size} />
+            )
+          }}
+        />
+        <Tab.Screen
+          name="Forecasts"
+          component={HomeStackScreen}
+          options={{
+            tabBarIcon: ({ focused, color, size }) => (
+              <PredictionIcon focused={focused} color={color} size={size} />
+            )
+          }}
+        />
+        <Tab.Screen
+          name="Profile"
+          component={ProfileStackScreen}
+          options={{
+            tabBarIcon: ({ focused, color, size }) => (
+              <ProfileIcon focused={focused} color={color} size={size} />
+            )
+          }}
+        />
       </Tab.Navigator>
     )
   )
