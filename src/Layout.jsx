@@ -6,8 +6,11 @@ import EncryptedStorage from 'react-native-encrypted-storage';
 import GuestMainScreen from './screens/GuestMainScreen';
 import GuestLoginScreen from './screens/GuestLoginScreen';
 import GuestSignScreen from './screens/GuestSignScreen';
+import DraftMainScreen from './screens/DraftMainScreen';
+import ForecastsMainScreen from './screens/ForecastsMainScreen';
 import ProfileMainScreen from './screens/ProfileMainScreen';
 import HomeScreen from './screens/HomeScreen';
+
 import DraftIcon from './assets/icons/DraftIcon';
 import PredictionIcon from './assets/icons/PredictionIcon';
 import ProfileIcon from './assets/icons/ProfileIcon';
@@ -16,15 +19,31 @@ import { useAuth } from './contexts/AuthContext';
 
 const Tab = createBottomTabNavigator();
 const GuestStack = createNativeStackNavigator();
-const HomeStack = createNativeStackNavigator();
+const DraftStack = createNativeStackNavigator();
+const ForecastsStack = createNativeStackNavigator();
 const ProfileStack = createNativeStackNavigator();
 
-function HomeStackScreen() {
+function DraftStackScreen() {
   return (
-    <HomeStack.Navigator>
-      <HomeStack.Screen name="Home" component={HomeScreen} />
-      <HomeStack.Screen name="Details" component={HomeScreen} />
-    </HomeStack.Navigator>
+    <DraftStack.Navigator>
+      <DraftStack.Screen
+        name="DraftMain"
+        component={DraftMainScreen}
+        options={{ title: "Draft" }}
+      />
+    </DraftStack.Navigator>
+  );
+}
+
+function ForecastsStackScreen() {
+  return (
+    <ForecastsStack.Navigator>
+      <ForecastsStack.Screen
+        name="ForecastsMain"
+        component={ForecastsMainScreen}
+        options={{ title: "Forecasts" }}
+      />
+    </ForecastsStack.Navigator>
   );
 }
 
@@ -66,7 +85,7 @@ export default function Layout() {
       <Tab.Navigator screenOptions={{ headerShown: false }}>
         <Tab.Screen
           name="Draft"
-          component={HomeStackScreen}
+          component={DraftStackScreen}
           options={{
             tabBarIcon: ({ focused, color, size }) => (
               <DraftIcon focused={focused} color={color} size={size} />
@@ -75,7 +94,7 @@ export default function Layout() {
         />
         <Tab.Screen
           name="Forecasts"
-          component={HomeStackScreen}
+          component={ForecastsStackScreen}
           options={{
             tabBarIcon: ({ focused, color, size }) => (
               <PredictionIcon focused={focused} color={color} size={size} />
