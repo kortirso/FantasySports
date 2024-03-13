@@ -16,17 +16,37 @@ import { createUser } from '../api/authApi';
 import Colors from '../constants/Colors';
 
 export default function GuestSignScreen({ navigation }) {
-  const { setAccessToken } = useAuth();
+  const { updateAuthState } = useAuth();
   const [pageState, setPageState] = useState({
     email: '',
     password: '',
-    passwordConfirmation: ''
+    passwordConfirmation: '',
+    errors: []
   });
 
   const signUser = async () => {
     const response = await createUser(pageState.email, pageState.password, pageState.passwordConfirmation);
-    if (!!response) setAccessToken(response.access_token);
-  }
+
+    if (!response) {
+      setPageState({ ...pageState, errors: ['Undefined error'] });
+    } else if (response.errors) {
+      setPageState({ ...pageState, errors: response.errors });
+    } else {
+      updateAuthState(response.user.data.attributes);
+    };
+  };
+
+  const renderErrors = () => {
+    if (pageState.errors.length === 0) return <></>;
+
+    return (
+      pageState.errors.map((error, index) => (
+        <View key={index}>
+          <Text style={{ color: Colors.red600 }}>{error}</Text>
+        </View>
+      ))
+    )
+  };
 
   return (
     <SafeAreaView style={{ backgroundColor: Colors.stone100 }}>
@@ -58,6 +78,7 @@ export default function GuestSignScreen({ navigation }) {
             keyboardType="email-address"
             onChangeText={(value) => setPageState({ ...pageState, passwordConfirmation: value })}
           />
+          {renderErrors()}
           <Button title="Sign up" onPress={() => signUser()} />
         </View>
       </ScrollView>

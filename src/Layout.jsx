@@ -10,6 +10,8 @@ import DraftMainScreen from './screens/DraftMainScreen';
 import ForecastsMainScreen from './screens/ForecastsMainScreen';
 import ProfileMainScreen from './screens/ProfileMainScreen';
 import HomeScreen from './screens/HomeScreen';
+import UnconfirmedScreen from './screens/UnconfirmedScreen';
+import BannedScreen from './screens/BannedScreen';
 
 import DraftIcon from './assets/icons/DraftIcon';
 import PredictionIcon from './assets/icons/PredictionIcon';
@@ -62,55 +64,58 @@ function ProfileStackScreen() {
 export default function Layout() {
   const { authState } = useAuth();
 
+  if (!authState.accessToken) return (
+    <GuestStack.Navigator> 
+      <GuestStack.Screen
+        name="GuestMain"
+        component={GuestMainScreen}
+        options={{ title: "", headerShown: false }}
+      />
+      <GuestStack.Screen
+        name="GuestLogin"
+        component={GuestLoginScreen}
+        options={{ title: "Login", headerBackTitle: "Back" }}
+      />
+      <GuestStack.Screen
+        name="GuestSign"
+        component={GuestSignScreen}
+        options={{ title: "SignUp", headerBackTitle: "Back" }}
+      />
+    </GuestStack.Navigator>
+  );
+
+  if (!authState.confirmed) return <UnconfirmedScreen />;
+  if (authState.banned) return <BannedScreen />;
+
   return (
-    !authState.accessToken ? (
-      <GuestStack.Navigator> 
-        <GuestStack.Screen
-          name="GuestMain"
-          component={GuestMainScreen}
-          options={{ title: "", headerShown: false }}
-        />
-        <GuestStack.Screen
-          name="GuestLogin"
-          component={GuestLoginScreen}
-          options={{ title: "Login", headerBackTitle: "Back" }}
-        />
-        <GuestStack.Screen
-          name="GuestSign"
-          component={GuestSignScreen}
-          options={{ title: "SignUp", headerBackTitle: "Back" }}
-        />
-      </GuestStack.Navigator>
-    ) : (
-      <Tab.Navigator screenOptions={{ headerShown: false }}>
-        <Tab.Screen
-          name="Draft"
-          component={DraftStackScreen}
-          options={{
-            tabBarIcon: ({ focused, color, size }) => (
-              <DraftIcon focused={focused} color={color} size={size} />
-            )
-          }}
-        />
-        <Tab.Screen
-          name="Forecasts"
-          component={ForecastsStackScreen}
-          options={{
-            tabBarIcon: ({ focused, color, size }) => (
-              <PredictionIcon focused={focused} color={color} size={size} />
-            )
-          }}
-        />
-        <Tab.Screen
-          name="Profile"
-          component={ProfileStackScreen}
-          options={{
-            tabBarIcon: ({ focused, color, size }) => (
-              <ProfileIcon focused={focused} color={color} size={size} />
-            )
-          }}
-        />
-      </Tab.Navigator>
-    )
+    <Tab.Navigator screenOptions={{ headerShown: false }}>
+      <Tab.Screen
+        name="Draft"
+        component={DraftStackScreen}
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <DraftIcon focused={focused} color={color} size={size} />
+          )
+        }}
+      />
+      <Tab.Screen
+        name="Forecasts"
+        component={ForecastsStackScreen}
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <PredictionIcon focused={focused} color={color} size={size} />
+          )
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={ProfileStackScreen}
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <ProfileIcon focused={focused} color={color} size={size} />
+          )
+        }}
+      />
+    </Tab.Navigator>
   )
 }

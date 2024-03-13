@@ -1,15 +1,20 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
-  View
+  Text,
+  View,
+  Pressable
 } from 'react-native';
 
+import { useAuth } from '../contexts/AuthContext';
 import Colors from '../constants/Colors';
 
-export default function DraftMainScreen() {
+export default function BannedScreen() {
+  const { clearAuthState } = useAuth();
+
   return (
     <SafeAreaView style={{ backgroundColor: Colors.stone100 }}>
       <StatusBar
@@ -22,6 +27,15 @@ export default function DraftMainScreen() {
         contentContainerStyle={styles.screenContainer}
       >
         <View style={styles.container}>
+          <View>
+            <Text style={{ textAlign: 'center', fontSize: 20, marginVertical: 6 }}>Your account is banned.</Text>
+          </View>
+          <Pressable style={styles.logoutBox} onPress={() => clearAuthState()}>
+            <Text style={styles.logoutText}>Logout</Text>
+          </Pressable>
+          <Pressable style={styles.logoutBox} onPress={() => console.log("Delete account press")}>
+            <Text style={styles.logoutText}>Delete account</Text>
+          </Pressable>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -43,5 +57,13 @@ const styles = StyleSheet.create({
     padding: 24,
     flexDirection: 'column',
     gap: 12
+  },
+  logoutBox: {
+    marginVertical: 4
+  },
+  logoutText: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: Colors.red600
   }
 });

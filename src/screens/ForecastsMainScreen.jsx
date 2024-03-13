@@ -9,7 +9,7 @@ import {
 
 import Colors from '../constants/Colors';
 
-export default function ForecastsMainScreen({ navigation }) {
+export default function ForecastsMainScreen() {
   return (
     <SafeAreaView style={{ backgroundColor: Colors.stone100 }}>
       <StatusBar

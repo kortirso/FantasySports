@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -6,15 +6,14 @@ import {
   StyleSheet,
   Text,
   View,
-  Pressable,
-  Image
+  Pressable
 } from 'react-native';
 
 import { useAuth } from '../contexts/AuthContext';
 import Colors from '../constants/Colors';
 
-export default function ProfileMainScreen() {
-  const { authState, clearAuthState } = useAuth();
+export default function UnconfirmedScreen() {
+  const { clearAuthState } = useAuth();
 
   return (
     <SafeAreaView style={{ backgroundColor: Colors.stone100 }}>
@@ -28,12 +27,10 @@ export default function ProfileMainScreen() {
         contentContainerStyle={styles.screenContainer}
       >
         <View style={styles.container}>
-          <View style={styles.profileContainer}>
-            <Image
-              style={styles.profileLogo}
-              source={{ uri: authState.gravatar }}
-            />
-            <Text style={styles.profileEmail}>{authState.email}</Text>
+          <View>
+            <Text style={{ textAlign: 'center', fontSize: 20, marginVertical: 6 }}>Your email is not confirmed yet.</Text>
+            <Text style={{ textAlign: 'center', fontSize: 20, marginVertical: 6 }}>Please check your mailbox.</Text>
+            <Text style={{ textAlign: 'center', fontSize: 20, marginVertical: 6 }}>After confirming email - please re-login in the application.</Text>
           </View>
           <Pressable style={styles.logoutBox} onPress={() => clearAuthState()}>
             <Text style={styles.logoutText}>Logout</Text>
@@ -62,20 +59,6 @@ const styles = StyleSheet.create({
     padding: 24,
     flexDirection: 'column',
     gap: 12
-  },
-  profileContainer: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    marginBottom: 80
-  },
-  profileLogo: {
-    width: 60,
-    height: 60,
-    borderRadius: 10,
-  },
-  profileEmail: {
-    marginVertical: 12,
-    fontSize: 18
   },
   logoutBox: {
     marginVertical: 4
