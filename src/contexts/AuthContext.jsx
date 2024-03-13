@@ -1,6 +1,6 @@
 import { useState, useEffect, createContext, useContext } from "react";
-import EncryptedStorage from 'react-native-encrypted-storage';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import EncryptedStorage from "react-native-encrypted-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const AuthContext = createContext();
 
