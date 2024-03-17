@@ -94,7 +94,7 @@ export default function ForecastsMainScreen({ navigation }) {
             source={{ uri: oraculPlace.background_url }}
           />
           <View style={styles.oraculPlaceNameBox}>
-            <Text style={styles.oraculPlaceName}>{oraculPlace.name.en}</Text>
+            <Text style={styles.oraculPlaceName}>{oraculPlace.name}</Text>
           </View>
         </Pressable>
       )

@@ -10,6 +10,7 @@ const AUTH_DATA_STORAGE_NAME = "auth_data";
 const initialState = {
   accessToken: undefined,
   email: undefined,
+  locale: "en",
   confirmed: undefined,
   banned: undefined,
   gravatar: undefined
@@ -30,7 +31,7 @@ const AuthProvider = ({ children }) => {
       // read simple storage
       const jsonValue = await AsyncStorage.getItem(AUTH_DATA_STORAGE_NAME);
       const parsedJsonValue = jsonValue != null ? JSON.parse(jsonValue) : null
-      setAuthState({ accessToken: accessToken, email: parsedJsonValue.email, confirmed: parsedJsonValue.confirmed, banned: parsedJsonValue.banned, gravatar: parsedJsonValue.gravatar });
+      setAuthState({ accessToken: accessToken, email: parsedJsonValue.email, locale: parsedJsonValue.locale, confirmed: parsedJsonValue.confirmed, banned: parsedJsonValue.banned, gravatar: parsedJsonValue.gravatar });
     } catch (err) {
     }
   };
@@ -41,9 +42,9 @@ const AuthProvider = ({ children }) => {
       // encrypted storage for access_token
       await EncryptedStorage.setItem(ACCESS_TOKEN_STORAGE_NAME, response.access_token);
       // simple storage for simple data
-      const jsonValue = JSON.stringify({ email: response.email, confirmed: response.confirmed, banned: response.banned, gravatar: response.gravatar });
+      const jsonValue = JSON.stringify({ email: response.email, locale: response.locale, confirmed: response.confirmed, banned: response.banned, gravatar: response.gravatar });
       await AsyncStorage.setItem(AUTH_DATA_STORAGE_NAME, jsonValue);
-      setAuthState({ accessToken: response.access_token, email: response.email, confirmed: response.confirmed, banned: response.banned, gravatar: response.gravatar });
+      setAuthState({ accessToken: response.access_token, email: response.email, locale: response.locale, confirmed: response.confirmed, banned: response.banned, gravatar: response.gravatar });
     } catch (error) {
     }
   };

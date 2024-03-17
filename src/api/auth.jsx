@@ -1,6 +1,6 @@
 const createUser = async (email, password, passwordConfirmation) => {
   try {
-    const response = await fetch("http://localhost:5000/api/v1/users?response_include_fields=email,confirmed,banned,access_token,gravatar", {
+    const response = await fetch("http://localhost:5000/api/v1/users?response_include_fields=email,confirmed,banned,access_token,gravatar,locale", {
       method: "POST",
       headers: { Accept: "application/json", "Content-Type": "application/json" },
       body: JSON.stringify({ user: { email: email, password: password, password_confirmation: passwordConfirmation } }),
@@ -13,7 +13,7 @@ const createUser = async (email, password, passwordConfirmation) => {
 
 const getAccessToken = async (email, password) => {
   try {
-    const response = await fetch("http://localhost:5000/api/v1/users/access_tokens?response_include_fields=email,confirmed,banned,access_token,gravatar", {
+    const response = await fetch("http://localhost:5000/api/v1/users/access_tokens?response_include_fields=email,confirmed,banned,access_token,gravatar,locale", {
       method: "POST",
       headers: { Accept: "application/json", "Content-Type": "application/json" },
       body: JSON.stringify({ user: { email: email, password: password } }),

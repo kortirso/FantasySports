@@ -5,9 +5,12 @@ import Colors from '../../constants/Colors';
 import { convertTime } from '../../helpers/time';
 import { updateOraculsForecast } from '../../api';
 import { useAuth } from '../../contexts/AuthContext';
+import { strings } from '../../locales';
 
 export default Forecastable = ({ item, isForWeek, forecast, last }) => {
   const { authState } = useAuth();
+
+  strings.setLanguage(authState.locale);
 
   const [homeForecast, setHomeForecast] = useState(
     forecast === undefined || forecast.value.length === 0 ? null : forecast.value[0].toString()
@@ -28,7 +31,7 @@ export default Forecastable = ({ item, isForWeek, forecast, last }) => {
 
   const renderForecastForView = () => (
     <View style={{ paddingHorizontal: 4 }}>
-      <Text style={styles.forecastViewTitle}>Forecast</Text>
+      <Text style={styles.forecastViewTitle}>{strings.game.forecast}</Text>
       <Text style={styles.forecastViewValue}>{homeForecast} - {visitorForecast}</Text>
     </View>
   );

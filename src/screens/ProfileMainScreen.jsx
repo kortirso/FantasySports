@@ -12,9 +12,12 @@ import {
 
 import { useAuth } from '../contexts/AuthContext';
 import Colors from '../constants/Colors';
+import { strings } from '../locales';
 
 export default function ProfileMainScreen() {
   const { authState, clearAuthState } = useAuth();
+
+  strings.setLanguage(authState.locale);
 
   return (
     <SafeAreaView style={{ backgroundColor: Colors.stone100 }}>
@@ -36,10 +39,10 @@ export default function ProfileMainScreen() {
             <Text style={styles.profileEmail}>{authState.email}</Text>
           </View>
           <Pressable style={styles.logoutBox} onPress={() => clearAuthState()}>
-            <Text style={styles.logoutText}>Logout</Text>
+            <Text style={styles.logoutText}>{strings.profile.logout}</Text>
           </Pressable>
           <Pressable style={styles.logoutBox} onPress={() => console.log("Delete account press")}>
-            <Text style={styles.logoutText}>Delete account</Text>
+            <Text style={styles.logoutText}>{strings.profile.delete}</Text>
           </Pressable>
         </View>
       </ScrollView>

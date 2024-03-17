@@ -18,6 +18,7 @@ import { convertDate } from '../helpers/time';
 import Button from '../components/Button';
 import Badge from '../components/Badge';
 import Forecastable from './forecasts/Forecastable';
+import { strings } from '../locales';
 
 const MILLISECONDS_IN_DAY = 86400000;
 
@@ -25,6 +26,8 @@ export default function ForecastsShowScreen({ navigation, route }) {
   const { oraculId, currentWeekId } = route.params;
 
   const { authState } = useAuth();
+
+  strings.setLanguage(authState.locale);
 
   const [pageState, setPageState] = useState({
     loading: true,
@@ -143,27 +146,27 @@ export default function ForecastsShowScreen({ navigation, route }) {
     return (
       <View style={styles.contentContainer}>
         <View style={{ marginBottom: 12, alignSelf: 'flex-start' }}>
-          <Badge value={pageState.periodableType === "Week" ? `Week ${pageState.periodable.position}` : pageState.periodable.name} />
+          <Badge value={pageState.periodableType === "Week" ? `${strings.forecasts.week} ${pageState.periodable.position}` : pageState.periodable.name} />
         </View>
         <View style={{ marginBottom: 12 }}>
           <Text style={{ fontSize: 24 }}>
-            {pageState.periodableType === "Week" ? "Week results" : "Round results"}
+            {pageState.periodableType === "Week" ? strings.forecasts.weekResults : strings.forecasts.roundResults}
           </Text>
         </View>
         <View style={{ marginBottom: 12 }}>
-          <Text style={{ fontSize: 14 }}>This page contains results of predictions, in addition you can make prediction for future events. Deadline for prediction - 2 hours before event.</Text>
+          <Text style={{ fontSize: 14 }}>{strings.forecasts.description}</Text>
         </View>
         <View style={styles.pointsBox}>
           <View style={[styles.pointBox, { borderRightWidth: 1, borderRightColor: Colors.stone300 }]}>
-            <Text style={styles.pointBoxTitle}>Points</Text>
+            <Text style={styles.pointBoxTitle}>{strings.forecasts.points}</Text>
             <Text style={styles.pointBoxValue}>{pageState.points}</Text>
           </View>
           <View style={[styles.pointBox, { borderRightWidth: 1, borderRightColor: Colors.stone300 }]}>
-            <Text style={styles.pointBoxTitle}>Avg points</Text>
+            <Text style={styles.pointBoxTitle}>{strings.forecasts.avgPoints}</Text>
             <Text style={styles.pointBoxValue}>{pageState.lineupsData.avg}</Text>
           </View>
           <View style={styles.pointBox}>
-            <Text style={styles.pointBoxTitle}>Max points</Text>
+            <Text style={styles.pointBoxTitle}>{strings.forecasts.maxPoints}</Text>
             <Text style={styles.pointBoxValue}>{pageState.lineupsData.max}</Text>
           </View>
         </View>
@@ -171,7 +174,7 @@ export default function ForecastsShowScreen({ navigation, route }) {
           <View style={{ flex: 1 }}>
             {pageState.periodable.previous_id ? (
               <Button
-                title="Previous"
+                title={strings.forecasts.previous}
                 onPress={() => navigation.navigate("ForecastShow", { oraculId: oraculId, currentWeekId: pageState.periodable.previous_id })}
               />
             ) : null}
@@ -179,7 +182,7 @@ export default function ForecastsShowScreen({ navigation, route }) {
           <View style={{ flex: 1 }}>
             {pageState.periodable.next_id ? (
               <Button
-                title="Next"
+                title={strings.forecasts.next}
                 onPress={() => navigation.navigate("ForecastShow", { oraculId: oraculId, currentWeekId: pageState.periodable.next_id })}
               />
             ) : null}

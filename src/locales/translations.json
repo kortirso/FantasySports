@@ -1,0 +1,42 @@
+{
+  "en": {
+    "profile": {
+      "logout": "Logout",
+      "delete": "Delete account"
+    },
+    "forecasts": {
+      "week": "Week",
+      "weekResults": "Week results",
+      "roundResults": "Round results",
+      "description": "This page contains results of predictions, in addition you can make prediction for future events. Deadline for prediction - 2 hours before event.",
+      "points": "Points",
+      "avgPoints": "Avg points",
+      "maxPoints": "Max points",
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "game": {
+      "forecast": "Forecast"
+    }
+  },
+  "ru": {
+    "profile": {
+      "logout": "Выйти",
+      "delete": "Удалить аккаунт"
+    },
+    "forecasts": {
+      "week": "Неделя",
+      "weekResults": "Результаты тура",
+      "roundResults": "Результаты круга",
+      "description": "Эта страница содержит результаты прогнозов, также вы можете сделать прогнозы на будущие события. Дедлайн для прогнозов - 2 часа до начала события.",
+      "points": "Очки",
+      "avgPoints": "В среднем",
+      "maxPoints": "Максимум",
+      "previous": "Прошлый",
+      "next": "Следующий"
+    },
+    "game": {
+      "forecast": "Прогноз"
+    }
+  }
+}
