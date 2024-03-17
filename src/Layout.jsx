@@ -8,6 +8,7 @@ import GuestLoginScreen from './screens/GuestLoginScreen';
 import GuestSignScreen from './screens/GuestSignScreen';
 import DraftMainScreen from './screens/DraftMainScreen';
 import ForecastsMainScreen from './screens/ForecastsMainScreen';
+import ForecastsShowScreen from './screens/ForecastsShowScreen';
 import ProfileMainScreen from './screens/ProfileMainScreen';
 import HomeScreen from './screens/HomeScreen';
 import UnconfirmedScreen from './screens/UnconfirmedScreen';
@@ -44,6 +45,11 @@ function ForecastsStackScreen() {
         name="ForecastsMain"
         component={ForecastsMainScreen}
         options={{ title: "Forecasts" }}
+      />
+      <ForecastsStack.Screen
+        name="ForecastShow"
+        component={ForecastsShowScreen}
+        options={{ title: "", headerBackTitle: "Back" }}
       />
     </ForecastsStack.Navigator>
   );

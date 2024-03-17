@@ -12,17 +12,13 @@ import {
 } from 'react-native';
 
 import Colors from '../constants/Colors';
-import { getLeagues } from '../api/leagueRequests';
-import { getSeasons } from '../api/seasonRequests';
-import { getCups } from '../api/cupRequests';
-import { getOraculPlaces } from '../api/oraculPlaceRequests';
-import { getOraculs } from '../api/oraculRequests';
-import { useAuth } from '../contexts/AuthContext';
+import { fetchAllLeagues, fetchAllSeasons, fetchAllCups, fetchAllOraculPlaces, fetchAllOraculs } from '../api';
 import { fetchFromCache } from '../cache/cache';
+import { useAuth } from '../contexts/AuthContext';
 
 const MILLISECONDS_IN_DAY = 86400000;
 
-export default function ForecastsMainScreen() {
+export default function ForecastsMainScreen({ navigation }) {
   const { authState } = useAuth();
 
   const [pageState, setPageState] = useState({
@@ -32,11 +28,11 @@ export default function ForecastsMainScreen() {
   });
 
   const fetchPageData = ({ cache }) => {
-    const fetchLeagues = async (useCache) => await fetchFromCache(useCache, 'leagues', MILLISECONDS_IN_DAY, () => getLeagues(authState.accessToken));
-    const fetchSeasons = async (useCache) => await fetchFromCache(useCache, 'seasons', MILLISECONDS_IN_DAY, () => getSeasons(authState.accessToken));
-    const fetchCups = async (useCache) => await fetchFromCache(useCache, 'cups', MILLISECONDS_IN_DAY, () => getCups(authState.accessToken));
-    const fetchOraculPlaces = async (useCache) => await fetchFromCache(useCache, 'oraculPlaces', MILLISECONDS_IN_DAY, () => getOraculPlaces(authState.accessToken));
-    const fetchOraculs = async () => await getOraculs(authState.accessToken);
+    const fetchLeagues = async (useCache) => await fetchFromCache(useCache, 'leagues', MILLISECONDS_IN_DAY, () => fetchAllLeagues(authState.accessToken));
+    const fetchSeasons = async (useCache) => await fetchFromCache(useCache, 'seasons', MILLISECONDS_IN_DAY, () => fetchAllSeasons(authState.accessToken));
+    const fetchCups = async (useCache) => await fetchFromCache(useCache, 'cups', MILLISECONDS_IN_DAY, () => fetchAllCups(authState.accessToken));
+    const fetchOraculPlaces = async (useCache) => await fetchFromCache(useCache, 'oraculPlaces', MILLISECONDS_IN_DAY, () => fetchAllOraculPlaces(authState.accessToken));
+    const fetchOraculs = async () => await fetchAllOraculs(authState.accessToken);
 
     Promise.all(
       [fetchLeagues(cache), fetchSeasons(cache), fetchCups(cache), fetchOraculPlaces(cache), fetchOraculs()]
@@ -76,7 +72,7 @@ export default function ForecastsMainScreen() {
       return existingOracul ? (
         <Pressable
           style={styles.oraculPlaceContainer}
-          onPress={() => console.log(oraculPlace.uuid)}
+          onPress={() => navigation.navigate("ForecastShow", { oraculId: existingOracul.id })}
           key={oraculPlace.id}
         >
           <Image
@@ -90,7 +86,7 @@ export default function ForecastsMainScreen() {
       ) : (
         <Pressable
           style={styles.oraculPlaceContainer}
-          onPress={() => console.log(oraculPlace.uuid)}
+          onPress={() => console.log(oraculPlace.id)}
           key={oraculPlace.id}
         >
           <Image

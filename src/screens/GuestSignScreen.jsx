@@ -5,14 +5,13 @@ import {
   StatusBar,
   StyleSheet,
   Text,
-  View,
-  TextInput
+  View
 } from 'react-native';
 
 import Button from '../components/Button';
 import FormField from '../components/FormField';
 import { useAuth } from '../contexts/AuthContext';
-import { createUser } from '../api/authApi';
+import { createUser } from '../api';
 import Colors from '../constants/Colors';
 
 export default function GuestSignScreen({ navigation }) {

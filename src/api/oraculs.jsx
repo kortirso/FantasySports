@@ -1,7 +1,7 @@
-const getOraculs = async (accessToken) => {
+const fetchAllOraculs = async (accessToken) => {
   try {
     const host = "http://localhost:5000";
-    const responseIncludeFields = "uuid,name,oracul_place_id";
+    const responseIncludeFields = "id,name,oracul_place_id";
     const response = await fetch(`${host}/api/v1/oraculs?response_include_fields=${responseIncludeFields}&api_access_token=${accessToken}`, {
       method: "GET"
     });
@@ -12,4 +12,4 @@ const getOraculs = async (accessToken) => {
   }
 };
 
-export { getOraculs };
+export { fetchAllOraculs };

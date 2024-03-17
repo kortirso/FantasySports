@@ -1,4 +1,4 @@
-const getLeagues = async (accessToken) => {
+const fetchAllLeagues = async (accessToken) => {
   try {
     const host = "http://localhost:5000";
     const responseIncludeFields = "id,name,sport_kind,background_url";
@@ -12,4 +12,4 @@ const getLeagues = async (accessToken) => {
   }
 };
 
-export { getLeagues };
+export { fetchAllLeagues };

@@ -1,7 +1,7 @@
-const getCups = async (accessToken) => {
+const fetchAllCups = async (accessToken) => {
   try {
     const host = "http://localhost:5000";
-    const responseIncludeFields = "id,uuid,name,league_id";
+    const responseIncludeFields = "id,name,league_id";
     const response = await fetch(`${host}/api/v1/cups?response_include_fields=${responseIncludeFields}&api_access_token=${accessToken}`, {
       method: "GET"
     });
@@ -12,4 +12,4 @@ const getCups = async (accessToken) => {
   }
 };
 
-export { getCups };
+export { fetchAllCups };
