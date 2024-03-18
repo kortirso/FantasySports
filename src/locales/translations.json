@@ -1,5 +1,12 @@
 {
   "en": {
+    "navigation": {
+      "back": "Back",
+      "draftShort": "Draft",
+      "draft": "Draft players",
+      "forecasts": "Forecasts",
+      "profile": "Profile"
+    },
     "profile": {
       "logout": "Logout",
       "delete": "Delete account"
@@ -24,6 +31,13 @@
     }
   },
   "ru": {
+    "navigation": {
+      "back": "Назад",
+      "draftShort": "Драфт",
+      "draft": "Драфт игроков",
+      "forecasts": "Прогнозы",
+      "profile": "Профиль"
+    },
     "profile": {
       "logout": "Выйти",
       "delete": "Удалить аккаунт"

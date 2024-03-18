@@ -13,11 +13,11 @@ import {
 
 import { Button, Popup, FormField } from '../components';
 import { fetchAllLeagues, fetchAllSeasons, fetchAllCups, fetchAllOraculPlaces, fetchAllOraculs, createOracul } from '../api';
+import { strings } from '../locales';
 
 import Colors from '../constants/Colors';
 import { fetchFromCache } from '../cache/cache';
 import { useAuth } from '../contexts/AuthContext';
-import { strings } from '../locales';
 
 const MILLISECONDS_IN_DAY = 86400000;
 

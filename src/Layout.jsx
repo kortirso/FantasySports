@@ -1,7 +1,8 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import EncryptedStorage from 'react-native-encrypted-storage';
+
+import { strings } from './locales';
 
 import GuestMainScreen from './screens/GuestMainScreen';
 import GuestLoginScreen from './screens/GuestLoginScreen';
@@ -27,41 +28,53 @@ const ForecastsStack = createNativeStackNavigator();
 const ProfileStack = createNativeStackNavigator();
 
 function DraftStackScreen() {
+  const { authState } = useAuth();
+
+  strings.setLanguage(authState.locale);
+
   return (
     <DraftStack.Navigator>
       <DraftStack.Screen
         name="DraftMain"
         component={DraftMainScreen}
-        options={{ title: "Draft" }}
+        options={{ title: strings.navigation.draft }}
       />
     </DraftStack.Navigator>
   );
 }
 
 function ForecastsStackScreen() {
+  const { authState } = useAuth();
+
+  strings.setLanguage(authState.locale);
+
   return (
     <ForecastsStack.Navigator>
       <ForecastsStack.Screen
         name="ForecastsMain"
         component={ForecastsMainScreen}
-        options={{ title: "Forecasts" }}
+        options={{ title: strings.navigation.forecasts }}
       />
       <ForecastsStack.Screen
         name="ForecastShow"
         component={ForecastsShowScreen}
-        options={{ title: "", headerBackTitle: "Back" }}
+        options={{ title: "", headerBackTitle: strings.navigation.back }}
       />
     </ForecastsStack.Navigator>
   );
 }
 
 function ProfileStackScreen() {
+  const { authState } = useAuth();
+
+  strings.setLanguage(authState.locale);
+
   return (
     <ProfileStack.Navigator>
       <ProfileStack.Screen
         name="ProfileMain"
         component={ProfileMainScreen}
-        options={{ title: "Profile" }}
+        options={{ title: strings.navigation.profile }}
       />
     </ProfileStack.Navigator>
   );
@@ -69,6 +82,8 @@ function ProfileStackScreen() {
 
 export default function Layout() {
   const { authState } = useAuth();
+
+  strings.setLanguage(authState.locale);
 
   if (!authState.accessToken) return (
     <GuestStack.Navigator> 
@@ -96,7 +111,7 @@ export default function Layout() {
   return (
     <Tab.Navigator screenOptions={{ headerShown: false }}>
       <Tab.Screen
-        name="Draft"
+        name={strings.navigation.draftShort}
         component={DraftStackScreen}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
@@ -105,7 +120,7 @@ export default function Layout() {
         }}
       />
       <Tab.Screen
-        name="Forecasts"
+        name={strings.navigation.forecasts}
         component={ForecastsStackScreen}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
@@ -114,7 +129,7 @@ export default function Layout() {
         }}
       />
       <Tab.Screen
-        name="Profile"
+        name={strings.navigation.profile}
         component={ProfileStackScreen}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
