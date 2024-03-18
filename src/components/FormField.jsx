@@ -3,29 +3,27 @@ import { StyleSheet, View, Text, TextInput } from 'react-native';
 
 import Colors from '../constants/Colors';
 
-export default function FormField({
+const FormField = ({
   label,
   placeholder,
   keyboardType,
   onChangeText,
   secureTextEntry = false
-}) {
-  return (
-    <View style={styles.sectionStyle}>
-      <Text style={styles.inputLabel}>{label}</Text>
-      <TextInput
-        style={styles.inputStyle}
-        onChangeText={(value) => onChangeText(value)}
-        placeholder={placeholder}
-        placeholderTextColor={Colors.stone300}
-        autoCapitalize="none"
-        keyboardType={keyboardType}
-        returnKeyType="next"
-        secureTextEntry={secureTextEntry}
-      />
-    </View>
-  );
-}
+}) => (
+  <View style={styles.sectionStyle}>
+    <Text style={styles.inputLabel}>{label}</Text>
+    <TextInput
+      style={styles.inputStyle}
+      onChangeText={(value) => onChangeText(value)}
+      placeholder={placeholder}
+      placeholderTextColor={Colors.stone300}
+      autoCapitalize="none"
+      keyboardType={keyboardType}
+      returnKeyType="next"
+      secureTextEntry={secureTextEntry}
+    />
+  </View>
+);
 
 const styles = StyleSheet.create({
   sectionStyle: {
@@ -43,3 +41,5 @@ const styles = StyleSheet.create({
     borderRadius: 4
   }
 });
+
+export { FormField };

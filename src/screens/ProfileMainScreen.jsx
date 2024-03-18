@@ -10,9 +10,10 @@ import {
   Image
 } from 'react-native';
 
+import { strings } from '../locales';
+
 import { useAuth } from '../contexts/AuthContext';
 import Colors from '../constants/Colors';
-import { strings } from '../locales';
 
 export default function ProfileMainScreen() {
   const { authState, clearAuthState } = useAuth();

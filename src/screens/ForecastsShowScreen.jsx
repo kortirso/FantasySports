@@ -10,15 +10,15 @@ import {
   Text
 } from 'react-native';
 
-import Colors from '../constants/Colors';
+import { Button, Badge } from '../components';
 import { fetchOraculsLineup, fetchCupsRound, fetchAllCupsPairs, fetchWeek, fetchAllGames } from '../api';
+import { strings } from '../locales';
+
+import Colors from '../constants/Colors';
 import { fetchFromCache } from '../cache/cache';
 import { useAuth } from '../contexts/AuthContext';
 import { convertDate } from '../helpers/time';
-import Button from '../components/Button';
-import Badge from '../components/Badge';
 import Forecastable from './forecasts/Forecastable';
-import { strings } from '../locales';
 
 const MILLISECONDS_IN_DAY = 86400000;
 

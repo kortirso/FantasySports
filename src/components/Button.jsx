@@ -3,13 +3,30 @@ import { StyleSheet, Text, Pressable } from 'react-native';
 
 import Colors from '../constants/Colors';
 
-export default function Button({ title, onPress }) {
-  return (
-    <Pressable style={styles.buttonBox} onPress={onPress}>
-      <Text style={styles.buttonText}>{title}</Text>
-    </Pressable>
-  );
-}
+const Button = ({
+  title,
+  onPress,
+  size = "default",
+  buttonBoxStyles = {},
+  buttonTextStyles = {}
+}) => (
+  <Pressable
+    style={[
+      styles.buttonBox,
+      size === "big" ? styles.buttonBoxBig : {},
+      buttonBoxStyles
+    ]}
+    onPress={onPress}
+  >
+    <Text
+      style={[
+        styles.buttonText,
+        size === "big" ? styles.buttonTextBig : {},
+        buttonTextStyles
+      ]}
+    >{title}</Text>
+  </Pressable>
+);
 
 const styles = StyleSheet.create({
   buttonBox: {
@@ -20,8 +37,17 @@ const styles = StyleSheet.create({
     borderColor: Colors.goldeenMiddle,
     borderRadius: 4
   },
+  buttonBoxBig: {
+    paddingVertical: 10,
+    paddingHorizontal: 20
+  },
   buttonText: {
     textAlign: 'center',
     fontSize: 16
+  },
+  buttonTextBig: {
+    fontSize: 20
   }
 });
+
+export { Button };

@@ -8,10 +8,10 @@ import {
   View
 } from 'react-native';
 
-import Button from '../components/Button';
-import FormField from '../components/FormField';
-import { useAuth } from '../contexts/AuthContext';
+import { Button, FormField } from '../components';
 import { getAccessToken } from '../api';
+
+import { useAuth } from '../contexts/AuthContext';
 import Colors from '../constants/Colors';
 
 export default function GuestLoginScreen() {

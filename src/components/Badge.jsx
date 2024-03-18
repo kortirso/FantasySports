@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import Colors from '../constants/Colors';
 
-export default Badge = ({ value }) => (
+const Badge = ({ value }) => (
   <View style={styles.badgeBox}>
     <Text style={styles.badgeText}>{value}</Text>
   </View>
@@ -24,3 +24,5 @@ const styles = StyleSheet.create({
     color: Colors.white
   }
 });
+
+export { Badge };

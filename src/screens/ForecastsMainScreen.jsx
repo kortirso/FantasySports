@@ -11,20 +11,28 @@ import {
   Image
 } from 'react-native';
 
+import { Button, Popup, FormField } from '../components';
+import { fetchAllLeagues, fetchAllSeasons, fetchAllCups, fetchAllOraculPlaces, fetchAllOraculs, createOracul } from '../api';
+
 import Colors from '../constants/Colors';
-import { fetchAllLeagues, fetchAllSeasons, fetchAllCups, fetchAllOraculPlaces, fetchAllOraculs } from '../api';
 import { fetchFromCache } from '../cache/cache';
 import { useAuth } from '../contexts/AuthContext';
+import { strings } from '../locales';
 
 const MILLISECONDS_IN_DAY = 86400000;
 
 export default function ForecastsMainScreen({ navigation }) {
   const { authState } = useAuth();
 
+  strings.setLanguage(authState.locale);
+
   const [pageState, setPageState] = useState({
     loading: true,
     oraculPlaces: [],
-    oraculs: []
+    oraculs: [],
+    modalForOracul: undefined,
+    oraculName: "",
+    errors: []
   });
 
   const fetchPageData = ({ cache }) => {
@@ -58,6 +66,33 @@ export default function ForecastsMainScreen({ navigation }) {
     fetchPageData({ cache: true });
   }, []);
 
+  const submitOraculForm = async () => {
+    const result = await createOracul(pageState.modalForOracul, { name: pageState.oraculName }, authState.accessToken);
+    if (result.errors) {
+      setPageState({ ...pageState, errors: result.errors });
+    } else {
+      setPageState({
+        ...pageState,
+        modalForOracul: undefined,
+        oraculName: "",
+        errors: [],
+        oraculs: pageState.oraculs.concat(result.result.data.attributes)
+      })
+    };
+  };
+
+  const renderErrors = () => {
+    if (pageState.errors.length === 0) return <></>;
+
+    return (
+      pageState.errors.map((error, index) => (
+        <View style={{ marginTop: 4 }} key={index}>
+          <Text style={{ color: Colors.red600 }}>{error}</Text>
+        </View>
+      ))
+    )
+  };
+
   const renderLoadingScreen = () => (
     <View style={styles.oraculPlaceContainer}>
       <View style={styles.loadingLogo}></View>
@@ -86,7 +121,7 @@ export default function ForecastsMainScreen({ navigation }) {
       ) : (
         <Pressable
           style={styles.oraculPlaceContainer}
-          onPress={() => console.log(oraculPlace.id)}
+          onPress={() => setPageState({ ...pageState, modalForOracul: oraculPlace.id })}
           key={oraculPlace.id}
         >
           <Image
@@ -116,6 +151,25 @@ export default function ForecastsMainScreen({ navigation }) {
         <View style={styles.container}>
           {pageState.loading ? renderLoadingScreen() : renderOraculPlaces()}
         </View>
+        <Popup
+          visible={pageState.modalForOracul !== undefined}
+          onRequestClose={() => setPageState({ ...pageState, modalForOracul: undefined, errors: [], oraculName: "" })}
+          title={strings.forecasts.addingOracul}
+        >
+          <FormField
+            label={strings.forecasts.nameLabel}
+            placeholder={strings.forecasts.namePlaceholder}
+            keyboardType="default"
+            onChangeText={(value) => setPageState({ ...pageState, oraculName: value })}
+          />
+          {renderErrors()}
+          <Button
+            title={strings.forecasts.createOracul}
+            size="big"
+            buttonBoxStyles={{ marginTop: 16 }}
+            onPress={() => submitOraculForm()}
+          />
+        </Popup>
       </ScrollView>
     </SafeAreaView>
   );

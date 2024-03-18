@@ -8,7 +8,8 @@ import {
   View,
 } from 'react-native';
 
-import Button from '../components/Button';
+import { Button } from '../components';
+
 import Colors from '../constants/Colors';
 
 export default function GuestMainScreen({ navigation }) {

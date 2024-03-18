@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TextInput } from 'react-native';
 
+import { updateOraculsForecast } from '../../api';
+import { strings } from '../../locales';
+
 import Colors from '../../constants/Colors';
 import { convertTime } from '../../helpers/time';
-import { updateOraculsForecast } from '../../api';
 import { useAuth } from '../../contexts/AuthContext';
-import { strings } from '../../locales';
 
 export default Forecastable = ({ item, isForWeek, forecast, last }) => {
   const { authState } = useAuth();
