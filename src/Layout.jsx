@@ -5,8 +5,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { strings } from './locales';
 
 import GuestMainScreen from './screens/GuestMainScreen';
-import GuestLoginScreen from './screens/GuestLoginScreen';
-import GuestSignScreen from './screens/GuestSignScreen';
 import DraftMainScreen from './screens/DraftMainScreen';
 import ForecastsMainScreen from './screens/ForecastsMainScreen';
 import ForecastsShowScreen from './screens/ForecastsShowScreen';
@@ -91,16 +89,6 @@ export default function Layout() {
         name="GuestMain"
         component={GuestMainScreen}
         options={{ title: "", headerShown: false }}
-      />
-      <GuestStack.Screen
-        name="GuestLogin"
-        component={GuestLoginScreen}
-        options={{ title: "Login", headerBackTitle: "Back" }}
-      />
-      <GuestStack.Screen
-        name="GuestSign"
-        component={GuestSignScreen}
-        options={{ title: "SignUp", headerBackTitle: "Back" }}
       />
     </GuestStack.Navigator>
   );

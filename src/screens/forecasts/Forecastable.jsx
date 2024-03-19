@@ -9,7 +9,7 @@ import { convertTime } from '../../helpers/time';
 import { useAuth } from '../../contexts/AuthContext';
 
 export default Forecastable = ({ item, isForWeek, forecast, last }) => {
-  const { authState } = useAuth();
+  const { authState, clearAuthState } = useAuth();
 
   strings.setLanguage(authState.locale);
 
@@ -22,11 +22,15 @@ export default Forecastable = ({ item, isForWeek, forecast, last }) => {
 
   useEffect(() => {
     if (parseInt(homeForecast) >= 0 && parseInt(visitorForecast) >= 0) {
-      updateOraculsForecast(
-        forecast.id,
-        { value: [parseInt(homeForecast), parseInt(visitorForecast)] },
-        authState.accessToken
-      );
+      try {
+        updateOraculsForecast(
+          forecast.id,
+          { value: [parseInt(homeForecast), parseInt(visitorForecast)] },
+          authState.accessToken
+        );
+      } catch(error) {
+        if (error.name == "AuthError") clearAuthState();
+      }
     };
   }, [homeForecast, visitorForecast, forecast.id]);
 

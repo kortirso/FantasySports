@@ -22,7 +22,7 @@ import { useAuth } from '../contexts/AuthContext';
 const MILLISECONDS_IN_DAY = 86400000;
 
 export default function ForecastsMainScreen({ navigation }) {
-  const { authState } = useAuth();
+  const { authState, clearAuthState } = useAuth();
 
   strings.setLanguage(authState.locale);
 
@@ -49,11 +49,13 @@ export default function ForecastsMainScreen({ navigation }) {
         const leagueId = oraculPlaceData.placeable_type === "Season" ? seasonsData.find((e) => e.id === oraculPlaceData.placeable_id).league_id : cupsData.find((e) => e.id === oraculPlaceData.placeable_id).league_id;
         const league = leaguesData.find((e) => e.id === leagueId);
 
-        oraculPlaceData["background_url"] = league.background_url
+        oraculPlaceData["background_url"] = league?.background_url
         return oraculPlaceData;
       });
 
       setPageState({ ...pageState, loading: false, oraculPlaces: oraculPlaces, oraculs: oraculsData });
+    }).catch((error) => {
+      if (error.name == "AuthError") clearAuthState();
     });
   };
 

@@ -25,7 +25,7 @@ const MILLISECONDS_IN_DAY = 86400000;
 export default function ForecastsShowScreen({ navigation, route }) {
   const { oraculId, currentWeekId } = route.params;
 
-  const { authState } = useAuth();
+  const { authState, clearAuthState } = useAuth();
 
   strings.setLanguage(authState.locale);
 
@@ -78,42 +78,46 @@ export default function ForecastsShowScreen({ navigation, route }) {
     const fetchSeasonWeek = async (useCache, id) => await fetchFromCache(useCache, `week-${id}`, MILLISECONDS_IN_DAY, () => fetchWeek(id, authState.accessToken));
     const fetchGames = async (weekId) => await fetchAllGames(weekId, authState.accessToken);
 
-    const oraculsLineupData = await fetchLineup();
+    try {
+      const oraculsLineupData = await fetchLineup();
 
-    if (oraculsLineupData.periodable_type === "Cups::Round") {
-      Promise.all(
-        [fetchRound(cache, oraculsLineupData.periodable_id), fetchPairs(oraculsLineupData.periodable_id)]
-      ).then(([cupsRoundData, cupsPairsData]) => {
-        const groupedGames = groupGames(cupsPairsData);
-        setPageState({
-          ...pageState,
-          loading: false,
-          periodableType: "Cups::Round",
-          periodable: cupsRoundData,
-          forecastables: groupedGames,
-          forecasts: oraculsLineupData.forecasts.data.map((item) => item.attributes),
-          collapseData: generateCollapsedData(groupedGames),
-          points: oraculsLineupData.points,
-          lineupsData: oraculsLineupData.lineups_data
+      if (oraculsLineupData.periodable_type === "Cups::Round") {
+        Promise.all(
+          [fetchRound(cache, oraculsLineupData.periodable_id), fetchPairs(oraculsLineupData.periodable_id)]
+        ).then(([cupsRoundData, cupsPairsData]) => {
+          const groupedGames = groupGames(cupsPairsData);
+          setPageState({
+            ...pageState,
+            loading: false,
+            periodableType: "Cups::Round",
+            periodable: cupsRoundData,
+            forecastables: groupedGames,
+            forecasts: oraculsLineupData.forecasts.data.map((item) => item.attributes),
+            collapseData: generateCollapsedData(groupedGames),
+            points: oraculsLineupData.points,
+            lineupsData: oraculsLineupData.lineups_data
+          });
         });
-      });
-    } else {
-      Promise.all(
-        [fetchSeasonWeek(cache, oraculsLineupData.periodable_id), fetchGames(oraculsLineupData.periodable_id)]
-      ).then(([weekData, gamesData]) => {
-        const groupedGames = groupGames(gamesData);
-        setPageState({
-          ...pageState,
-          loading: false,
-          periodableType: "Week",
-          periodable: weekData,
-          forecastables: groupedGames,
-          forecasts: oraculsLineupData.forecasts.data.map((item) => item.attributes),
-          collapseData: generateCollapsedData(groupedGames),
-          points: oraculsLineupData.points,
-          lineupsData: oraculsLineupData.lineups_data
-        });
-      });
+      } else {
+        Promise.all(
+          [fetchSeasonWeek(cache, oraculsLineupData.periodable_id), fetchGames(oraculsLineupData.periodable_id)]
+        ).then(([weekData, gamesData]) => {
+          const groupedGames = groupGames(gamesData);
+          setPageState({
+            ...pageState,
+            loading: false,
+            periodableType: "Week",
+            periodable: weekData,
+            forecastables: groupedGames,
+            forecasts: oraculsLineupData.forecasts.data.map((item) => item.attributes),
+            collapseData: generateCollapsedData(groupedGames),
+            points: oraculsLineupData.points,
+            lineupsData: oraculsLineupData.lineups_data
+          });
+        })
+      }
+    } catch (error) {
+      if (error.name == "AuthError") clearAuthState();
     }
   };
 
