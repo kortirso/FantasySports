@@ -11,6 +11,7 @@ import {
 
 import {strings} from '../locales';
 
+import {destroyUser} from '../api';
 import {useAuth} from '../contexts/AuthContext';
 import Colors from '../constants/Colors';
 
@@ -18,6 +19,13 @@ export default function UnconfirmedScreen() {
   const {authState, clearAuthState} = useAuth();
 
   strings.setLanguage(authState.locale);
+
+  const onDeleteUser = async () => {
+    const response = await destroyUser(authState.accessToken);
+    if (response.result === 'ok') {
+      clearAuthState();
+    }
+  };
 
   return (
     <SafeAreaView style={{backgroundColor: Colors.stone100}}>
@@ -44,9 +52,7 @@ export default function UnconfirmedScreen() {
           <Pressable style={styles.logoutBox} onPress={() => clearAuthState()}>
             <Text style={styles.logoutText}>{strings.profile.logout}</Text>
           </Pressable>
-          <Pressable
-            style={styles.logoutBox}
-            onPress={() => console.log('Delete account press')}>
+          <Pressable style={styles.logoutBox} onPress={() => onDeleteUser()}>
             <Text style={styles.logoutText}>{strings.profile.delete}</Text>
           </Pressable>
         </View>

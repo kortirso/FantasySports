@@ -25,6 +25,20 @@ const createUser = async (email, password, passwordConfirmation) => {
   }
 };
 
+const destroyUser = async accessToken => {
+  try {
+    const response = await fetch(
+      `${API_HOST}/api/v1/users?api_access_token=${accessToken}`,
+      {
+        method: 'DELETE',
+      },
+    );
+    return response.json();
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 const getAccessToken = async (email, password) => {
   try {
     const response = await fetch(
@@ -49,4 +63,4 @@ const getAccessToken = async (email, password) => {
   }
 };
 
-export {createUser, getAccessToken};
+export {createUser, destroyUser, getAccessToken};
