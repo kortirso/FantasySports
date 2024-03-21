@@ -13,6 +13,7 @@
       "checkMailbox": "Please check your mailbox.",
       "relogin": "After confirming email - please re-login in the application.",
       "logout": "Logout",
+      "switchLocale": "Switch locale",
       "delete": "Delete account"
     },
     "forecasts": {
@@ -44,10 +45,11 @@
     },
     "profile": {
       "banned": "Ваш аккаунт заблокирован.",
-      "notConfirmed": "",
-      "checkMailbox": "",
-      "relogin": "",
+      "notConfirmed": "Вы не подтвердили почту.",
+      "checkMailbox": "Пожалуйста проверьте ваш почтовый ящик.",
+      "relogin": "После подтверждения - перелогиньтесь в приложении.",
       "logout": "Выйти",
+      "switchLocale": "Сменить локаль",
       "delete": "Удалить аккаунт"
     },
     "forecasts": {

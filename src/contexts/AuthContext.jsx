@@ -72,6 +72,16 @@ const AuthProvider = ({children}) => {
     } catch (error) {}
   };
 
+  // set access token to EncryptedStorage
+  const updateParamsAuthState = async params => {
+    try {
+      // simple storage for simple data
+      const jsonValue = JSON.stringify(params);
+      await AsyncStorage.setItem(AUTH_DATA_STORAGE_NAME, jsonValue);
+      setAuthState({...authState, ...params});
+    } catch (error) {}
+  };
+
   // remove access token from EncryptedStorage
   const clearAuthState = async () => {
     try {
@@ -87,7 +97,13 @@ const AuthProvider = ({children}) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{authState, updateAuthState, clearAuthState}}>
+    <AuthContext.Provider
+      value={{
+        authState,
+        updateAuthState,
+        updateParamsAuthState,
+        clearAuthState,
+      }}>
       {children}
     </AuthContext.Provider>
   );

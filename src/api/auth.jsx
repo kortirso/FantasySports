@@ -25,6 +25,27 @@ const createUser = async (email, password, passwordConfirmation) => {
   }
 };
 
+const updateUser = async (accessToken, params) => {
+  try {
+    const response = await fetch(
+      `${API_HOST}/api/v1/users?response_include_fields=locale&api_access_token=${accessToken}`,
+      {
+        method: 'PATCH',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user: params,
+        }),
+      },
+    );
+    return response.json();
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 const destroyUser = async accessToken => {
   try {
     const response = await fetch(
@@ -63,4 +84,4 @@ const getAccessToken = async (email, password) => {
   }
 };
 
-export {createUser, destroyUser, getAccessToken};
+export {createUser, updateUser, destroyUser, getAccessToken};

@@ -12,12 +12,12 @@ import {
 
 import {strings} from '../locales';
 
-import {destroyUser} from '../api';
+import {updateUser, destroyUser} from '../api';
 import {useAuth} from '../contexts/AuthContext';
 import Colors from '../constants/Colors';
 
 export default function ProfileMainScreen() {
-  const {authState, clearAuthState} = useAuth();
+  const {authState, clearAuthState, updateParamsAuthState} = useAuth();
 
   strings.setLanguage(authState.locale);
 
@@ -25,6 +25,13 @@ export default function ProfileMainScreen() {
     const response = await destroyUser(authState.accessToken);
     if (response.result === 'ok') {
       clearAuthState();
+    }
+  };
+
+  const onUpdateUser = async locale => {
+    const response = await updateUser(authState.accessToken, {locale: locale});
+    if (response.user) {
+      updateParamsAuthState({locale: locale});
     }
   };
 
@@ -46,6 +53,17 @@ export default function ProfileMainScreen() {
           <Pressable style={styles.logoutBox} onPress={() => clearAuthState()}>
             <Text style={styles.logoutText}>{strings.profile.logout}</Text>
           </Pressable>
+          <View style={styles.logoutBox}>
+            <Text style={styles.logoutText}>
+              {strings.profile.switchLocale}
+            </Text>
+            <Pressable onPress={() => onUpdateUser('en')}>
+              <Text style={styles.logoutText}>EN</Text>
+            </Pressable>
+            <Pressable onPress={() => onUpdateUser('ru')}>
+              <Text style={styles.logoutText}>RU</Text>
+            </Pressable>
+          </View>
           <Pressable style={styles.logoutBox} onPress={() => onDeleteUser()}>
             <Text style={styles.logoutText}>{strings.profile.delete}</Text>
           </Pressable>
@@ -87,6 +105,8 @@ const styles = StyleSheet.create({
   },
   logoutBox: {
     marginVertical: 4,
+    flexDirection: 'row',
+    gap: 12,
   },
   logoutText: {
     fontSize: 16,
