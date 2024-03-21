@@ -1,12 +1,24 @@
-import { API_HOST } from "@env";
+import {API_HOST} from '@env';
 
 const createUser = async (email, password, passwordConfirmation) => {
   try {
-    const response = await fetch(`${API_HOST}/api/v1/users?response_include_fields=email,confirmed,banned,access_token,gravatar,locale`, {
-      method: "POST",
-      headers: { Accept: "application/json", "Content-Type": "application/json" },
-      body: JSON.stringify({ user: { email: email, password: password, password_confirmation: passwordConfirmation } }),
-    });
+    const response = await fetch(
+      `${API_HOST}/api/v1/users?response_include_fields=email,confirmed,banned,access_token,gravatar,locale`,
+      {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user: {
+            email: email,
+            password: password,
+            password_confirmation: passwordConfirmation,
+          },
+        }),
+      },
+    );
     return response.json();
   } catch (error) {
     console.error(error);
@@ -15,15 +27,26 @@ const createUser = async (email, password, passwordConfirmation) => {
 
 const getAccessToken = async (email, password) => {
   try {
-    const response = await fetch(`${API_HOST}/api/v1/users/access_tokens?response_include_fields=email,confirmed,banned,access_token,gravatar,locale`, {
-      method: "POST",
-      headers: { Accept: "application/json", "Content-Type": "application/json" },
-      body: JSON.stringify({ user: { email: email, password: password } }),
-    });
+    const response = await fetch(
+      `${API_HOST}/api/v1/users/access_tokens?response_include_fields=email,confirmed,banned,access_token,gravatar,locale`,
+      {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user: {
+            email: email,
+            password: password,
+          },
+        }),
+      },
+    );
     return response.json();
   } catch (error) {
     console.error(error);
   }
 };
 
-export { createUser, getAccessToken };
+export {createUser, getAccessToken};

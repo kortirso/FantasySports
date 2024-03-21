@@ -1,30 +1,30 @@
 import React from 'react';
-import { StyleSheet, Text, Pressable } from 'react-native';
+import {StyleSheet, Text, Pressable} from 'react-native';
 
 import Colors from '../constants/Colors';
 
 const Button = ({
   title,
   onPress,
-  size = "default",
+  size = 'default',
   buttonBoxStyles = {},
-  buttonTextStyles = {}
+  buttonTextStyles = {},
 }) => (
   <Pressable
     style={[
       styles.buttonBox,
-      size === "big" ? styles.buttonBoxBig : {},
-      buttonBoxStyles
+      size === 'big' ? styles.buttonBoxBig : {},
+      buttonBoxStyles,
     ]}
-    onPress={onPress}
-  >
+    onPress={onPress}>
     <Text
       style={[
         styles.buttonText,
-        size === "big" ? styles.buttonTextBig : {},
-        buttonTextStyles
-      ]}
-    >{title}</Text>
+        size === 'big' ? styles.buttonTextBig : {},
+        buttonTextStyles,
+      ]}>
+      {title}
+    </Text>
   </Pressable>
 );
 
@@ -35,19 +35,19 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.goldeenLight,
     borderWidth: 1,
     borderColor: Colors.goldeenMiddle,
-    borderRadius: 4
+    borderRadius: 4,
   },
   buttonBoxBig: {
     paddingVertical: 10,
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
   },
   buttonText: {
     textAlign: 'center',
-    fontSize: 16
+    fontSize: 16,
   },
   buttonTextBig: {
-    fontSize: 20
-  }
+    fontSize: 20,
+  },
 });
 
-export { Button };
+export {Button};

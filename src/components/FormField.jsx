@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, TextInput } from 'react-native';
+import {StyleSheet, View, Text, TextInput} from 'react-native';
 
 import Colors from '../constants/Colors';
 
@@ -8,13 +8,13 @@ const FormField = ({
   placeholder,
   keyboardType,
   onChangeText,
-  secureTextEntry = false
+  secureTextEntry = false,
 }) => (
   <View style={styles.sectionStyle}>
     <Text style={styles.inputLabel}>{label}</Text>
     <TextInput
       style={styles.inputStyle}
-      onChangeText={(value) => onChangeText(value)}
+      onChangeText={value => onChangeText(value)}
       placeholder={placeholder}
       placeholderTextColor={Colors.stone300}
       autoCapitalize="none"
@@ -27,19 +27,19 @@ const FormField = ({
 
 const styles = StyleSheet.create({
   sectionStyle: {
-    backgroundColor: Colors.white
+    backgroundColor: Colors.white,
   },
   inputLabel: {
     marginBottom: 4,
     fontSize: 16,
-    fontWeight: '600'
+    fontWeight: '600',
   },
   inputStyle: {
     padding: 12,
     borderWidth: 1,
     borderColor: Colors.stone300,
-    borderRadius: 4
-  }
+    borderRadius: 4,
+  },
 });
 
-export { FormField };
+export {FormField};

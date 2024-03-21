@@ -1,7 +1,8 @@
-import { View } from 'react-native';
-import Svg, { Path } from 'react-native-svg';
+import React from 'react';
+import {View} from 'react-native';
+import Svg, {Path} from 'react-native-svg';
 
-export default function DraftIcon({ focused, color, size }) {
+export default function DraftIcon({focused, color, size}) {
   return (
     <View>
       <Svg height={size} width={size} viewBox="0 0 48 48">
@@ -21,4 +22,4 @@ export default function DraftIcon({ focused, color, size }) {
       </Svg>
     </View>
   );
-};
+}

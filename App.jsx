@@ -6,10 +6,10 @@
  */
 
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import {NavigationContainer} from '@react-navigation/native';
 
-import Layout from './src/Layout'
-import { AuthProvider } from './src/contexts/AuthContext';
+import Layout from './src/Layout';
+import {AuthProvider} from './src/contexts/AuthContext';
 
 export default function App() {
   return (
@@ -19,4 +19,4 @@ export default function App() {
       </NavigationContainer>
     </AuthProvider>
   );
-};
+}

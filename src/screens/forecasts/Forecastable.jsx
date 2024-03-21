@@ -1,55 +1,63 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {StyleSheet, Text, View, TextInput} from 'react-native';
 
-import { updateOraculsForecast } from '../../api';
-import { strings } from '../../locales';
+import {updateOraculsForecast} from '../../api';
+import {strings} from '../../locales';
 
 import Colors from '../../constants/Colors';
-import { convertTime } from '../../helpers/time';
-import { useAuth } from '../../contexts/AuthContext';
+import {convertTime} from '../../helpers/time';
+import {useAuth} from '../../contexts/AuthContext';
 
-export default Forecastable = ({ item, isForWeek, forecast, last }) => {
-  const { authState, clearAuthState } = useAuth();
+export default function Forecastable({item, isForWeek, forecast, last}) {
+  const {authState, clearAuthState} = useAuth();
 
   strings.setLanguage(authState.locale);
 
   const [homeForecast, setHomeForecast] = useState(
-    forecast === undefined || forecast.value.length === 0 ? null : forecast.value[0].toString()
+    forecast === undefined || forecast.value.length === 0
+      ? null
+      : forecast.value[0].toString(),
   );
   const [visitorForecast, setVisitorForecast] = useState(
-    forecast === undefined || forecast.value.length === 0 ? null : forecast.value[1].toString()
+    forecast === undefined || forecast.value.length === 0
+      ? null
+      : forecast.value[1].toString(),
   );
 
   useEffect(() => {
-    if (parseInt(homeForecast) >= 0 && parseInt(visitorForecast) >= 0) {
+    if (parseInt(homeForecast, 10) >= 0 && parseInt(visitorForecast, 10) >= 0) {
       try {
         updateOraculsForecast(
           forecast.id,
-          { value: [parseInt(homeForecast), parseInt(visitorForecast)] },
-          authState.accessToken
+          {value: [parseInt(homeForecast, 10), parseInt(visitorForecast, 10)]},
+          authState.accessToken,
         );
-      } catch(error) {
-        if (error.name == "AuthError") clearAuthState();
+      } catch (error) {
+        if (error.name === 'AuthError') {
+          clearAuthState();
+        }
       }
-    };
-  }, [homeForecast, visitorForecast, forecast.id]);
+    }
+  }, [homeForecast, visitorForecast, forecast.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const renderForecastForView = () => (
-    <View style={{ paddingHorizontal: 4 }}>
+    <View style={{paddingHorizontal: 4}}>
       <Text style={styles.forecastViewTitle}>{strings.game.forecast}</Text>
-      <Text style={styles.forecastViewValue}>{homeForecast} - {visitorForecast}</Text>
+      <Text style={styles.forecastViewValue}>
+        {homeForecast} - {visitorForecast}
+      </Text>
     </View>
   );
 
   const renderForecastForEdit = () => (
-    <View style={{ paddingHorizontal: 4, flexDirection: 'row', gap: 4 }}>
+    <View style={{paddingHorizontal: 4, flexDirection: 'row', gap: 4}}>
       <View>
         <Text style={styles.forecastViewTitle}>Home</Text>
-        <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
           <TextInput
             style={styles.inputStyle}
             value={homeForecast}
-            onChangeText={(value) => setHomeForecast(value)}
+            onChangeText={value => setHomeForecast(value)}
             placeholder="2"
             placeholderTextColor={Colors.stone200}
             autoCapitalize="none"
@@ -58,14 +66,17 @@ export default Forecastable = ({ item, isForWeek, forecast, last }) => {
           />
         </View>
       </View>
-      <View style={{ flexDirection: 'row', alignItems: 'center', paddingTop: 12 }}><Text>-</Text></View>
+      <View
+        style={{flexDirection: 'row', alignItems: 'center', paddingTop: 12}}>
+        <Text>-</Text>
+      </View>
       <View>
         <Text style={styles.forecastViewTitle}>Visitor</Text>
-        <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
           <TextInput
             style={styles.inputStyle}
             value={visitorForecast}
-            onChangeText={(value) => setVisitorForecast(value)}
+            onChangeText={value => setVisitorForecast(value)}
             placeholder="1"
             placeholderTextColor={Colors.stone200}
             autoCapitalize="none"
@@ -78,27 +89,41 @@ export default Forecastable = ({ item, isForWeek, forecast, last }) => {
   );
 
   const renderForecast = () => {
-    if (!item.predictable && forecast.value.length > 0) return renderForecastForView();
-    if (item.predictable && forecast.owner) return renderForecastForEdit();
+    if (!item.predictable && forecast.value.length > 0) {
+      return renderForecastForView();
+    }
+    if (item.predictable && forecast.owner) {
+      return renderForecastForEdit();
+    }
   };
 
   return (
-    <View style={[styles.forecastableBox, last ? null : styles.forecastableBoxBordered]}>
+    <View
+      style={[
+        styles.forecastableBox,
+        last ? null : styles.forecastableBoxBordered,
+      ]}>
       <View>
         {item.points.length > 0 ? (
-          <Text style={styles.points}>{item.points[0]} - {item.points[1]}</Text>
+          <Text style={styles.points}>
+            {item.points[0]} - {item.points[1]}
+          </Text>
         ) : (
           <Text style={styles.startAt}>{convertTime(item.start_at)}</Text>
         )}
       </View>
-      <View style={{ flex: 1 }}>
-        <Text style={styles.teamName}>{isForWeek ? item.home_team.name : item.home_name}</Text>
-        <Text style={styles.teamName}>{isForWeek ? item.visitor_team.name : item.visitor_name}</Text>
+      <View style={{flex: 1}}>
+        <Text style={styles.teamName}>
+          {isForWeek ? item.home_team.name : item.home_name}
+        </Text>
+        <Text style={styles.teamName}>
+          {isForWeek ? item.visitor_team.name : item.visitor_name}
+        </Text>
       </View>
       {forecast ? renderForecast() : null}
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   forecastableBox: {
@@ -106,16 +131,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     gap: 12,
-    paddingTop: 8
+    paddingTop: 8,
   },
   forecastableBoxBordered: {
     borderBottomWidth: 1,
     borderBottomColor: Colors.stone200,
-    paddingVertical: 8
+    paddingVertical: 8,
   },
   teamName: {
     fontSize: 16,
-    fontWeight: '500'
+    fontWeight: '500',
   },
   points: {
     paddingVertical: 8,
@@ -126,20 +151,20 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     color: Colors.white,
     fontSize: 18,
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   startAt: {
     paddingVertical: 12,
     paddingHorizontal: 16,
     borderWidth: 1,
     borderColor: Colors.stone200,
-    borderRadius: 4
+    borderRadius: 4,
   },
   forecastViewTitle: {
     fontSize: 8,
     textTransform: 'uppercase',
     textAlign: 'center',
-    marginBottom: 2
+    marginBottom: 2,
   },
   forecastViewValue: {
     textAlign: 'center',
@@ -148,7 +173,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.goldeenMiddle,
     borderRadius: 4,
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   inputStyle: {
     width: 30,
@@ -157,6 +182,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.stone300,
     borderRadius: 4,
-    textAlign: 'center'
-  }
+    textAlign: 'center',
+  },
 });

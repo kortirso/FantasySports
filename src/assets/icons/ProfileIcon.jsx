@@ -1,7 +1,8 @@
-import { View } from 'react-native';
-import Svg, { Circle, Path } from 'react-native-svg';
+import React from 'react';
+import {View} from 'react-native';
+import Svg, {Circle, Path} from 'react-native-svg';
 
-export default function ProfileIcon({ focused, color, size }) {
+export default function ProfileIcon({focused, color, size}) {
   return (
     <View>
       <Svg height={size} width={size} viewBox="0 0 24 24">
@@ -22,4 +23,4 @@ export default function ProfileIcon({ focused, color, size }) {
       </Svg>
     </View>
   );
-};
+}

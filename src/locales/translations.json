@@ -8,6 +8,10 @@
       "profile": "Profile"
     },
     "profile": {
+      "banned": "Your account is banned.",
+      "notConfirmed": "Your email is not confirmed yet.",
+      "checkMailbox": "Please check your mailbox.",
+      "relogin": "After confirming email - please re-login in the application.",
       "logout": "Logout",
       "delete": "Delete account"
     },
@@ -39,6 +43,10 @@
       "profile": "Профиль"
     },
     "profile": {
+      "banned": "Ваш аккаунт заблокирован.",
+      "notConfirmed": "",
+      "checkMailbox": "",
+      "relogin": "",
       "logout": "Выйти",
       "delete": "Удалить аккаунт"
     },
