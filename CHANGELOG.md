@@ -13,3 +13,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - forecasts screens and actions
 - deleting user
 - changing locale for users
+- images for leagues

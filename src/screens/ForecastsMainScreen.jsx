@@ -25,6 +25,7 @@ import {strings} from '../locales';
 import Colors from '../constants/Colors';
 import {fetchFromCache} from '../cache/cache';
 import {useAuth} from '../contexts/AuthContext';
+import {LeaguesAssets} from '../assets/images';
 
 const MILLISECONDS_IN_DAY = 86400000;
 
@@ -86,7 +87,7 @@ export default function ForecastsMainScreen({navigation}) {
                     .league_id;
             const league = leaguesData.find(e => e.id === leagueId);
 
-            oraculPlaceData.background_url = league?.background_url;
+            oraculPlaceData.slug = league?.slug;
             return oraculPlaceData;
           });
 
@@ -165,10 +166,12 @@ export default function ForecastsMainScreen({navigation}) {
             navigation.navigate('ForecastShow', {oraculId: existingOracul.id})
           }
           key={oraculPlace.id}>
-          <Image
-            style={styles.oraculPlaceLogo}
-            source={{uri: oraculPlace.background_url}}
-          />
+          <View style={styles.oraculPlaceLogoBox}>
+            <Image
+              style={styles.oraculPlaceLogo}
+              source={LeaguesAssets[oraculPlace.slug]}
+            />
+          </View>
           <View style={styles.oraculNameBox}>
             <Text style={styles.oraculPlaceName}>{existingOracul.name}</Text>
           </View>
@@ -180,10 +183,12 @@ export default function ForecastsMainScreen({navigation}) {
             setPageState({...pageState, modalForOracul: oraculPlace.id})
           }
           key={oraculPlace.id}>
-          <Image
-            style={styles.oraculPlaceLogo}
-            source={{uri: oraculPlace.background_url}}
-          />
+          <View style={styles.oraculPlaceLogoBox}>
+            <Image
+              style={styles.oraculPlaceLogo}
+              source={LeaguesAssets[oraculPlace.slug]}
+            />
+          </View>
           <View style={styles.oraculPlaceNameBox}>
             <Text style={styles.oraculPlaceName}>{oraculPlace.name}</Text>
           </View>
@@ -257,9 +262,12 @@ const styles = StyleSheet.create({
     borderColor: Colors.stone300,
     backgroundColor: Colors.white,
   },
+  oraculPlaceLogoBox: {
+    paddingVertical: 10,
+  },
   oraculPlaceLogo: {
     width: '100%',
-    height: 160,
+    height: 140,
     objectFit: 'contain',
   },
   oraculNameBox: {
@@ -269,7 +277,7 @@ const styles = StyleSheet.create({
     borderTopColor: Colors.stone300,
   },
   oraculPlaceNameBox: {
-    paddingVertical: 4,
+    paddingVertical: 8,
     borderTopWidth: 1,
     borderTopColor: Colors.stone300,
   },
