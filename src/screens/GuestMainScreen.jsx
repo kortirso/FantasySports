@@ -115,6 +115,7 @@ export default function GuestMainScreen({navigation}) {
               onChangeText={value => setPageState({...pageState, email: value})}
             />
             <FormField
+              secureTextEntry
               label="Password"
               placeholder="Enter password"
               keyboardType="default"
@@ -140,6 +141,7 @@ export default function GuestMainScreen({navigation}) {
               onChangeText={value => setPageState({...pageState, email: value})}
             />
             <FormField
+              secureTextEntry
               label="Password"
               placeholder="Enter password"
               keyboardType="default"
@@ -148,6 +150,7 @@ export default function GuestMainScreen({navigation}) {
               }
             />
             <FormField
+              secureTextEntry
               label="Password confirmation"
               placeholder="Repeat password"
               keyboardType="default"

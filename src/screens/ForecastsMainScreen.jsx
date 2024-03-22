@@ -263,7 +263,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
   },
   oraculPlaceLogoBox: {
-    paddingVertical: 10,
+    paddingVertical: 8,
   },
   oraculPlaceLogo: {
     width: '100%',
